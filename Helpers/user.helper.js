@@ -35,10 +35,10 @@ const UserHelpers={
         },
         login:async(email,password)=>{
             const response={
-                errors:[]
+               
             };
             try{
-                if(email!="" && password!=""){
+                
                     const user=await User.findOne({email:email});
                     if(user){
                         const isCorrect =await user.comparePassword(password);
@@ -53,22 +53,18 @@ const UserHelpers={
                             return response;
                          }else{
                             response.status=400;    
-                            response.errors.push({message:"password is incorrect"})
+                            response.message="password is incorrect"
                             return response;  
                         }  
                     }else{
                         response.status=400; 
-                        response.errors.push({message:"email is incorrect"})  
+                        response.message="email is incorrect"; 
                         return response;
                     }
-                }else{
-                    response.status=400; 
-                    response.errors.push({message:"email and password required"}) 
-                    return response;
-                }       
+                      
             }catch(err){
-                response.status=400; 
-                response.errors.push({message:err.message})
+                response.status=500; 
+                response.message=err.message;
                 return response;
             }
             
@@ -76,7 +72,7 @@ const UserHelpers={
         },
         
         createNewUser:async(newuser)=>{
-            
+           
             var response={};
             try{
  
