@@ -67,6 +67,73 @@ const profileService={
           }
           
          return response;  
+	   },
+	   addUserExperience:async(exp,id)=>{
+	   	const response={};
+	    try{
+	     	const profile= await Profile.findOne({user:id});
+	     
+	     	profile.experience.unshift(exp);
+	     	await profile.save();
+	     	const updatedProdfile=await profileService.getUserProfile(id)
+	     	response.status=200;
+	     	response.user  =updatedProdfile.profile;
+	     	response.response=true;
+	     	response.message="Experience is added successfully";
+	     }catch(err){
+	     	response.status=500;
+	     	response.user  =null;
+	     	response.response=false;
+	     	response.message=err.message;
+	     }
+	     return response;  		
+	   },
+	   updateExperience:async(uid,expid,expData)=>{
+	   	  const response={};
+	   	  try{
+	   	    profile = await profileService.getUserProfile(uid);
+	   	  	profile.profile.experience.forEach(exp=>{
+               if(exp._id==expid){
+                 exp.title	=expData.title;
+                 exp.company=expData.company;
+                 exp.location=expData.location;
+                 exp.from=expData.from;
+                 exp.to=expData.to;
+                 exp.current=expData.current;
+                 exp.description=expData.description;   
+               }
+            })
+           await profile.profile.save();
+	           response.status=200;
+	           response.profile=profile;
+	           response.response=true;
+	           response.message="Experience updated successfully!"; 	   	  	
+	   	  }catch(err){
+		   	   response.status=500;
+	           response.profile=null;
+	           response.response=false;
+	           response.message=err.message;
+	   	  }
+	   	  return response;
+	   },
+	   addUserEducation:async(eduData,id)=>{
+	   		const response={};
+		    try{
+		     	const profile= await Profile.findOne({user:id});
+		        profile.education.unshift(eduData);
+		     	await profile.save();
+		     	const updatedProdfile=await profileService.getUserProfile(id)
+		     	response.status=200;
+		     	response.user  =updatedProdfile.profile;
+		     	response.response=true;
+		     	response.message="Education is added successfully";
+		     }catch(err){
+		     	response.status=500;
+		     	response.user  =null;
+		     	response.response=false;
+		     	response.message=err.message;
+		     }
+		     return response;  	
 	   }
 }
 

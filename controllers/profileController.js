@@ -1,9 +1,8 @@
 const profileService	=require("../Helpers/profile.service");
 const {validationResult} =require("express-validator");
-
 const profileController={
 
-      getProfile:async(req,res)=>{
+     getProfile:async(req,res)=>{
       	  try{
       	    const profile= await profileService.getUserProfile(req.user.id)       
             res.status(profile.status).json(profile)
@@ -12,7 +11,7 @@ const profileController={
       	  }
           
       },
-      getProfiles:async(req, res)=>{
+     getProfiles:async(req, res)=>{
        
 
           try{
@@ -22,7 +21,7 @@ const profileController={
 	          	}
           	 res.status(profiles.status).json(profiles);
           }catch(err){
-          
+
             res.status(500).json({message:err.message})
           }
       },
@@ -59,7 +58,79 @@ const profileController={
           }catch(err){
             res.status(500).json({message:err.message})
           }
-      }		
+      },
+      addExperience:async(req,res)=>{
+      	  const errors =validationResult(req);
+      	  if(!errors.isEmpty()){
+      	  	return res.status(400).json({errors:errors.array()})
+      	  }
+          const experenceData={};
+          experenceData.title		=(req.body.title)?(req.body.title):"";
+          experenceData.company		=(req.body.company)?(req.body.company):"";
+          experenceData.location	=(req.body.location)?(req.body.location):"";
+          experenceData.from		=(req.body.from)?(req.body.from):"";
+          experenceData.to			=(req.body.to)?(req.body.to):"";
+          experenceData.current		=(req.body.current)?(req.body.current):"";
+          experenceData.description	=(req.body.description)?(req.body.description):"";
+          try{
+
+            const profile= await profileService.addUserExperience(experenceData,req.user.id);
+            console.log(profile);
+            res.status(profile.status).json(profile);
+          }catch(err){
+          	const errors=[];
+            res.status(500).json(errors.push({message:err.message}));
+          }
+         
+
+      },
+      editExperience:async(req,res)=>{
+          const errors =validationResult(req);
+      	  if(!errors.isEmpty()){
+      	  	return res.status(400).json({errors:errors.array()})
+      	  }
+          const userID		=req.user.id;
+          const expID 		=req.params.expid; 
+          const experenceData={};
+          experenceData.title		=req.body.title;
+          experenceData.company		=req.body.company;
+          experenceData.location	=req.body.location;
+          experenceData.from		=req.body.from;
+          experenceData.to			=req.body.to;
+          experenceData.current		=req.body.current;
+          experenceData.description	=req.body.description;
+          try{
+          	 const profile = await profileService.updateExperience(userID,expID,experenceData);
+          	 res.status(profile.status).json(profile); 
+		  }catch(err){
+ 			const errors=[];
+ 			res.status(500).json(errors.push({message:err.message}))
+		  }
+         
+      },
+      addEducation:async(req,res)=>{
+      	  
+      	  const errors =validationResult(req);
+      	  if(!errors.isEmpty()){
+      	  	return res.status(400).json({errors:errors.array()})
+      	  }
+          const educationData={};
+          educationData.school		=(req.body.school)?(req.body.school):"";
+          educationData.degree		=(req.body.degree)?(req.body.degree):"";
+          educationData.fieldofstudy=(req.body.fieldofstudy)?(req.body.fieldofstudy):"";
+          educationData.from		=(req.body.from)?(req.body.from):"";
+          educationData.to			=(req.body.to)?(req.body.to):"";
+          educationData.current		=(req.body.current)?(req.body.current):"";
+          educationData.description	=(req.body.description)?(req.body.description):"";
+          try{
+			const profile= await profileService.addUserEducation(educationData,req.user.id);
+            res.status(profile.status).json(profile);
+          }catch(err){
+          	const errors=[];
+            res.status(500).json(errors.push({message:err.message}));
+          }
+     },
+
 }
 
 module.exports =profileController;

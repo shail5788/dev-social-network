@@ -3,7 +3,10 @@ const profileRoute      = express.Router();
 const Profile           = require("../modals/profile.model");
 const profileController = require("../controllers/profileController");
 const privateRoute      = require("../middleware/auth.middleware");
-const profileValidator	= require("../validation/profile.validation");
+const {
+		profileValidator,
+		experinceValidator,
+		educationValidator}	= require("../validation/profile.validation");
 
 profileRoute.route("/")
             .post(
@@ -21,6 +24,26 @@ profileRoute.route("/all")
 			.get(
 					privateRoute,
 					profileController.getProfiles
-				)            
+				)
+profileRoute.route("/experience")
+			.put(
+					experinceValidator(),
+					privateRoute,
+					profileController.addExperience
+				)
+profileRoute.route("/experience/:expid")
+			.put(
+				    experinceValidator(),
+					privateRoute,
+					profileController.editExperience
+				)			
+profileRoute.route("/education")
+			.put(
+					educationValidator(),
+					privateRoute,
+					profileController.addEducation
+				)
+
+
 
 module.exports=profileRoute;
