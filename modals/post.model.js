@@ -1,0 +1,41 @@
+const mongoose=require("mongoose");
+const postSchema = new mongoose.Schema({
+
+      content:{
+      	type:String,
+      	require:true,
+      },
+      images:[{
+          type:String,
+          source:[{
+          	  thumbnail:{
+          	  	size:{type:String},
+          	  	path:{type:String}
+          	  },
+          	  original:{
+          	  	size:{type:String},
+          	  	path:{type:String}
+          	  }
+          }],
+      }],
+      vedio:{
+       	 url:{
+       	 	type:String
+       	 }
+       },
+      user:{
+      	type:mongoose.Schema.Types.ObjectId,
+      	ref:"user"
+      },
+     tags:[String],
+     location:{
+     	type:String
+     },
+     created_at:{
+     	type:Date,
+     	default:Date.now
+     } 
+})
+	
+const Post = mongoose.model("post",postSchema);
+module.exports = Post;
