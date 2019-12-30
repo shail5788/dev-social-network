@@ -6,7 +6,7 @@ const postValidation={
 	postValidator:()=>{
 
 		 return [
-             check("title","post have a title").not().notEmpty()
+             check("content","Please enter post content").not().notEmpty()
 		 ]
 	}
 }

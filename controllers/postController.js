@@ -1,3 +1,4 @@
+const multer =require("multer");
 const postService =require("../Helpers/post.service");
 const {validationResult} =require("express-validator");
 const postController={
@@ -29,18 +30,20 @@ const postController={
 	      if(!errors.isEmpty()){
 	      	 return res.status(400).json({errors:errors.array()});
 	      }
-	      postData.title=req.body.title;
-	      postData.description=(req.body.description)?req.body.description:"";
-	      postData.images=(req.body.images)?req.body.images:[];
-	      postData.user=req.user.id;
-	      postData.tags=(req.body.tags)?req.body.tags.split(",").map(tag=>tag.trim()):"";
-	      try{
-	      	const post= await postService.createPost(postData);
-	      	res.status(post.status).json(post);
-	      }catch(err){
-	      	const errors=[];
-	      	res.status(500).json(errors.push({message:err.message}))
-	      }
+
+
+
+	      // postData.content=req.body.data;
+	      // postData.images.thumbnail=(req.body.)?req.body.images:[];
+	      // postData.user=req.user.id;
+	      // postData.tags=(req.body.tags)?req.body.tags.split(",").map(tag=>tag.trim()):"";
+	      // try{
+	      // 	const post= await postService.createPost(postData);
+	      // 	res.status(post.status).json(post);
+	      // }catch(err){
+	      // 	const errors=[];
+	      // 	res.status(500).json(errors.push({message:err.message}))
+	      // }
 
      },
      edit:async(req,res)=>{

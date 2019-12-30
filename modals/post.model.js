@@ -5,9 +5,12 @@ const postSchema = new mongoose.Schema({
       	type:String,
       	require:true,
       },
+      media:{
+        type:Boolean,
+        default:false
+      },
       images:[{
-          type:String,
-          source:[{
+         source:[{
           	  thumbnail:{
           	  	size:{type:String},
           	  	path:{type:String}
@@ -18,14 +21,17 @@ const postSchema = new mongoose.Schema({
           	  }
           }],
       }],
-      vedio:{
-       	 url:{
-       	 	type:String
-       	 }
-       },
+      vedio:[{
+           url:{
+            type:String
+           }
+        }],
       user:{
       	type:mongoose.Schema.Types.ObjectId,
       	ref:"user"
+      },
+      mediaType:{
+        type:String
       },
      tags:[String],
      location:{
