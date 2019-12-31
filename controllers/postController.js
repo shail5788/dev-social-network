@@ -24,16 +24,17 @@ const postController={
         }
      },
      createPost:async(req,res)=>{
-	      
-	      const postData={};
-		  const errors =validationResult(req);
-	      if(!errors.isEmpty()){
-	      	 return res.status(400).json({errors:errors.array()});
-	      }
+	        console.log(req.files);
+            console.log(req.body.content);  
+	        const postData={};
+		   // const errors =validationResult(req);
+	    //   if(!errors.isEmpty()){
+	    //   	 return res.status(400).json({errors:errors.array()});
+	    //   }
 
+            
 
-
-	      // postData.content=req.body.data;
+	       //postData.content=req.body.data;
 	      // postData.images.thumbnail=(req.body.)?req.body.images:[];
 	      // postData.user=req.user.id;
 	      // postData.tags=(req.body.tags)?req.body.tags.split(",").map(tag=>tag.trim()):"";

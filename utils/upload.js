@@ -1,10 +1,12 @@
 
-const fileUploader={
+const fileValidator={
      
-     mediaUpload:(files)=>{
-         
+     validate:(req,files,cb)=>{
+
+          console.log(files);
+
      }
 
 }
 
-module.exports = fileUploader;
+module.exports = fileValidator;

@@ -11,14 +11,14 @@ const postSchema = new mongoose.Schema({
       },
       images:[{
          source:[{
-          	  thumbnail:{
+          	  thumbnail:[{
           	  	size:{type:String},
           	  	path:{type:String}
-          	  },
-          	  original:{
+          	  }],
+          	  original:[{
           	  	size:{type:String},
           	  	path:{type:String}
-          	  }
+          	  }]
           }],
       }],
       vedio:[{
