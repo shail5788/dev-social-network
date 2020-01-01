@@ -30,13 +30,8 @@ const postService={
     createPost:async(postData)=>{
     	const response={};
        try{
-    	 	let post = Post({
-    	 	   title:postData.title,
-    	 	   description:postData.description,
-    	 	   images:postData.images,
-    	 	   tags:postData.tags,
-    	 	   user:postData.user
-    	 	})
+    	 	
+            let post= new Post(postData)
             await post.save();
     	 	response.status=200;
     	 	response.post=post;
@@ -52,6 +47,26 @@ const postService={
     },
     deletePost:(postID)=>{
      console.log("edit post")
+    },
+    getUserPosts:async(user)=>{
+     const response={};
+         try{
+                const posts= await Post.find({user:user}).populate("user",['name','email']);
+                response.status=200;
+                response.posts=posts;
+                response.totalPost=posts.length;
+                response.response=true;
+             }catch(err){
+
+                response.status=500;
+                response.posts=null;
+                response.totalPost=0;
+                response.response=false;
+                response.errors=err.message;
+             }
+             
+              return response;     
+
     }
 
 }

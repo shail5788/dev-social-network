@@ -9,6 +9,9 @@ postRoute.route("/")
 		 .get(privateRoute,postController.getPosts)
 		 .post(postValidator(),privateRoute,postController.createPost)
 
+postRoute.route("/me")
+		 .get(privateRoute,postController.getUserPost)
+
 postRoute.route("/:id")
 		 .get(privateRoute,postController.getPost)
 		 .put(postValidator(),privateRoute,postController.edit)

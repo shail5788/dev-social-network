@@ -9,8 +9,8 @@ const postSchema = new mongoose.Schema({
         type:Boolean,
         default:false
       },
-      images:[{
-         source:[{
+      images:{
+         source:{
           	  thumbnail:[{
           	  	size:{type:String},
           	  	path:{type:String}
@@ -19,8 +19,8 @@ const postSchema = new mongoose.Schema({
           	  	size:{type:String},
           	  	path:{type:String}
           	  }]
-          }],
-      }],
+          },
+      },
       vedio:[{
            url:{
             type:String

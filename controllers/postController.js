@@ -26,25 +26,19 @@ const postController={
      createPost:async(req,res)=>{
 	        console.log(req.files);
             console.log(req.body.content);  
-	        const postData={};
-		   // const errors =validationResult(req);
-	    //   if(!errors.isEmpty()){
-	    //   	 return res.status(400).json({errors:errors.array()});
-	    //   }
-
-            
-
-	       //postData.content=req.body.data;
-	      // postData.images.thumbnail=(req.body.)?req.body.images:[];
-	      // postData.user=req.user.id;
-	      // postData.tags=(req.body.tags)?req.body.tags.split(",").map(tag=>tag.trim()):"";
-	      // try{
-	      // 	const post= await postService.createPost(postData);
-	      // 	res.status(post.status).json(post);
-	      // }catch(err){
-	      // 	const errors=[];
-	      // 	res.status(500).json(errors.push({message:err.message}))
+	        const postData=req.body.data;
+	        // res.status(200).json(postData);
+		   //const errors =validationResult(req);
+	      // if(!errors.isEmpty()){
+	      // 	 return res.status(400).json({errors:errors.array()});
 	      // }
+          try{
+	      	const post= await postService.createPost(postData);
+	      	res.status(post.status).json(post);
+	      }catch(err){
+	      	const errors=[];
+	      	res.status(500).json(errors.push({message:err.message}))
+	      }
 
      },
      edit:async(req,res)=>{
@@ -69,7 +63,20 @@ const postController={
      },
      deletePost:(req,res)=>{
 
+     },
+     getUserPost:async(req,res)=>{
+	      const userId=req.user.id;
+
+	      try{
+	      	const userPosts=await postService.getUserPosts(userId);
+	      	res.status(userPosts.status).json(userPosts);
+	      }catch(err){
+	      	res.status(500).json({message:err.message});
+	      }
+
      }
+
+
 
 }
 
