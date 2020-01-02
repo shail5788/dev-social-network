@@ -1,15 +1,24 @@
 const Post =require("../modals/post.model");
+const likeService=require("./like.service");
 const Errors =require("../utils/errorHandler");
+
 
 const postService={
 
     getAllPost:async()=>{
     	const response={};
+        const newposts=[];
     	try{
     	 	const posts =await Post.find({}).populate("user",['name'])
-    	 	response.status=200;
-    	 	response.posts=posts;
-    	 	response.response=true;
+            for(let post of posts){
+                const likes =await likeService.getlikes(post._id);
+                const newpost = {...post._doc};
+                newpost.like=likes.likes;
+                newposts.push(newpost);
+            }
+                response.status=200;
+                response.posts=newposts;
+                response.response=true;
     	}catch(err){
     	   response = Errors.errorHandler(err)	
     	}
@@ -67,6 +76,12 @@ const postService={
              
               return response;     
 
+    },
+    asyncLoop:async(posts,cb)=>{
+
+        for (let i=0;i<posts.length;i++){
+            await cb(posts[i],i,posts)
+        }
     }
 
 }

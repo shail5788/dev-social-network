@@ -1,6 +1,7 @@
 const mongoose =require("mongoose");
 const jwt      =require("jsonwebtoken");
 const bcrypt   =require("bcryptjs");
+const gravatar = require('gravatar');
 const User     =require("../modals/user.modal");
 
 
@@ -82,10 +83,26 @@ const UserHelpers={
                   response.message="user already exist!"
                   return response;
                 }
-
-                 user= new User({
+                if(newuser.handle!=""){
+                    let checkHandle=await User.findOne({handle:newuser.handle});
+                    if(checkHandle){
+                      response.status=400;
+                      response.message="Sorry!this user handle already in use";
+                      return response;
+                    }
+                }
+                
+                const avatar = gravatar.url(newuser.email, {
+                  s: '200',
+                  r: 'pg',
+                  d: 'mm'
+                });
+                  
+                user= new User({
                         name:newuser.name,
                         email:newuser.email,
+                        handle:newuser.handle,
+                        image:avatar,
                         password:newuser.password
                   })
                await user.save();

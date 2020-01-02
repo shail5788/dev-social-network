@@ -4,8 +4,7 @@ const uploader={
        
        getUploadedFiles:async(req,res)=>{
          const response={source:[]}
-          // console.log(req.files);
-          try{
+         try{
               if(req.files){
                   let thumbnail=[];
                   let original=[];
@@ -22,7 +21,6 @@ const uploader={
                   response.source.push({thumbnail:thumbnail});
                   response.source.push({original:original});    
               }
-
              res.status(200).json(response);   
           }catch(err){
              res.status(500).json({message:err.message})

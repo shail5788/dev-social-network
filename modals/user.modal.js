@@ -11,11 +11,17 @@ const userSchema= new mongoose.Schema({
         require:true,
         unique:true
     },
-    
+    handle:{
+       type:String,
+       require:true,
+       unique:true    
+    },
+    image:{
+        type:String,
+    },
     password:{
         type:String,
         require:true,
-    
     },
     create_at:{
         type:Date,
