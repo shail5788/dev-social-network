@@ -1,10 +1,10 @@
 const Like =require("../modals/like.model");
+const Post =require("../modals/post.model");
 
 const likeService={
 
 	 getlikes:async(postId)=>{
-	 	console.log(postId);
-	      const response={};    
+	 	  const response={};    
 	       try{
 	       	   const likes = await Like.find({post:postId}).populate('user',['name','handle','image'])
 	       	   response.status=200;
@@ -23,59 +23,30 @@ const likeService={
            const response={}; 
            
            try{
-	             
-	           let isLiked=await Like.findOne(
+	            let isLiked=await Like.findOne(
 	           						{$and:[
 	           							  {post:postId},
-	           							  {user:{$in:[userId]}}
+	           							  {user:userId}
 	           							]
 	           						});
-	            
 	            if(isLiked){
-
-		              response.status=201;
+	            	  response.status=201;
 		              response.message="already liked ";
 		              response.response=false;		
-	            } else{
-
-	                  const currentLike=await Like.findOne({post:postId});
-	                  console.log(currentLike);
-	                  if(currentLike==null){
-	                  	
-	                  	  let count =0;
-		                  count=count+1;
-			              let like =new Like({
-			                post:postId,
-			                user:userId,
-			                count:count
-			              })
-			            await like.save(); 
-			            const newLikes=await likeService.getlikes(postId) 
-			             response.status=200;
-			             response.likes=newLikes.likes;
-			             response.response=true;
-			             response.errors=null;
-	                  }else{
-
-	                  		 let count =currentLike.count;
-			                 count=count+1;
-			                 const data={};
-			                 data.user=currentLike.user;
-			                 data.count=count;
-			                 data.user.push(userId)
-                            const newLikes=await Like.findOneAndUpdate(
-							                            {post:postId},
-							                            {$set:data},{new:true}
-							                            )
-		                	 response.status=200;
-				             response.likes=newLikes;
-				             response.response=true;
-				             response.errors=null;
-				             
-				        	
-	                  }
-	                  
-		             
+	            }else{
+	              
+                    let currentLike =await Post.findOne({_id:postId})
+	            	     currentLike.activities.likes=currentLike.activities.likes+1;
+	            	     currentLike.save();
+	            	let like=new Like({
+	            		post:postId,
+	            		user:userId
+	            	})
+	            	like.save();
+                     response.status=200;
+		             response.post=currentLike;
+		             response.response=true;
+		             response.errors=null;
 	            }    
 	                 
 

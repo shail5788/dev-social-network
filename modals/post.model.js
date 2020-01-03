@@ -37,6 +37,16 @@ const postSchema = new mongoose.Schema({
      location:{
      	type:String
      },
+     activities:{
+          likes:{
+            type:Number,
+            default:0
+          },
+          comments:{
+            type:Number,
+            default:0
+          }
+     },
      created_at:{
      	type:Date,
      	default:Date.now

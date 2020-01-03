@@ -4,11 +4,10 @@ const likeSchema= new mongoose.Schema({
 		type:mongoose.Schema.Types.ObjectId,
 		ref:"post"
 	   },
-	user:[{
+	user:{
 		type:mongoose.Schema.Types.ObjectId,
 		ref:'user'
-		}],
-	count:{type:Number},
+		},
 	liked_at:{
 		type:Date,
 		default:Date.now
