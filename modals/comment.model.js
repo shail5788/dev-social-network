@@ -7,8 +7,8 @@ const commentSchema= new mongoose.Schema({
 		ref:"user"
 	},
 	post:{
-      type:mongoose.Schema.Types.ObjectId
-      ref:"post",
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"post"
 	},
 	comment:{
 		data:{
@@ -38,5 +38,5 @@ const commentSchema= new mongoose.Schema({
 	}
 });
 
-const Comment =commentModel.model("comment",Schema);
+const Comment =mongoose.model("comment",commentSchema);
 module.exports=Comment;
