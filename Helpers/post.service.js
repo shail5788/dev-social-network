@@ -68,8 +68,8 @@ const postService={
              }
         return response;     
 
-    }
-
+    },
+  
 }
 
 module.exports = postService;
