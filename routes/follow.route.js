@@ -8,10 +8,14 @@ FollowerRoute.route("/follow")
  			 .post(validate(),privateRoute,followController.follow);
 FollowerRoute.route("/unfollow")
 			 .post(validate(),privateRoute,followController.unFollow)
-FollowerRoute.route("/count")
+FollowerRoute.route("/:userID/followers/count")
 			 .get(privateRoute,followController.getAllfollowerCount);
-FollowerRoute.route("/followers")
+FollowerRoute.route("/:userID/following/count")
+			 .get(privateRoute,followController.getAllFollowingCount);
+FollowerRoute.route("/:userID/followers")
 			 .get(privateRoute,followController.getAllFollowers);
+FollowerRoute.route("/:userID/following")
+			 .get(privateRoute,followController.getAllFollowing);			 
 
 module.exports= FollowerRoute;			 	
 

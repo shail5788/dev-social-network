@@ -151,7 +151,7 @@ const UserHelpers={
                     id:user.id
                 }
             }
-            console.log(payload);
+            // console.log(payload);
             return jwt.sign(payload,process.env.SECRET,{expiresIn:3600000})
             
          }

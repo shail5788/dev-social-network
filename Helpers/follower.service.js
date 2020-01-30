@@ -45,7 +45,7 @@ const followers={
     	const response={};
             try{
 
-              const followers=await Followers.find({followerID:userID})
+              const followers=await Followers.find({followeeID:userID})
               response.status=200;
               response.followers=followers.length;
               response.response=true;
@@ -60,23 +60,59 @@ const followers={
             }
            return response; 
     },
-    getAllFollowers:(userId)=>{
+    getAllfollowingCount:async(userID)=>{
+    	const response={};
+            try{
+
+              const following=await Followers.find({followerID:userID})
+              response.status=200;
+              response.following=following.length;
+              response.response=true;
+
+            }catch(err){
+
+              response.status=500;
+              response.following=null;
+              response.response=false;
+              response.errors=err.message;
+
+            }
+           return response; 
+    },
+    getAllfollower:async(userId)=>{
     	const response={};
     	try{
-    		const followers=Followers.find({followerID:userId}).populate("user");
+    		const followers=await Followers.find({followeeID:userId}).populate("followerID",['name','handle','image']);
             response.status=200;
             response.followers=followers;
             response.response=true;
     	}catch(err){
     		response.status=500;
     		response.errors=err.message;
-    		response.response=false;
+    		response.response=false;	
 
     	}
     	return response;
 
+    },
+    getAllfollowing:async(userId)=>{
+    	const response={};
+    	try{
+    		const following=await Followers.find({followerID:userId}).populate("followerID",['name','handle','image']);
+            response.status=200;
+            response.following=following;
+            response.response=true;
+    	}catch(err){
+    		response.status=500;
+    		response.errors=err.message;
+    		response.response=false;	
+
+    	}
+    	return response;
     }
 
 
 
 }
+
+module.exports = followers;

@@ -3,8 +3,9 @@ const followerValidation={
 
 	   validate:()=>{
             return [
-                 check('followerID',"followerID is required").not().notEmpty(),
-                 check('followeeID',"followeeID is required").not().notEmpty()
+                 check('userInfo.followerID',"followerID is required").not().notEmpty(),
+                 check('userInfo.followeeID',"followeeID is required").not().notEmpty(),
+                  check('userInfo.status',"status is required").not().notEmpty()
             ]
 	   }
 }

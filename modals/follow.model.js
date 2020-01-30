@@ -24,5 +24,4 @@ const Follower =new Schema({
 })
 
 const Followers=mongoose.model("followers",Follower);
-
 module.exports =Followers; 
